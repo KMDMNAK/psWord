@@ -1,40 +1,62 @@
 import MeCab
-#import gensim
-#import numpy as np
 from collections import defaultdict
-import requests as req
-from scraping_tools import tag_search as xml
+from Scraping_tool import tag_search as xml
+
+import requests
+import re
 
 #sorted(frequency.items(),key=lambda x:-x[1])
-JAPANESE=["ja","jp","JP","jpn","JPN","japan","japanese","Japan","Japanese","JAPANESE","JAPAN"]
-ENGLISH=["en","EN","english","eng","ENG","ENGLISH"]
 
-def get_wordfrequency(documents,allword=True,language='ja'):
+
+
+def getWordFrequency(documents,allword=True,language='ja'):
     """
-    ///Args///
+    return how many times each word appear in documents.
+    if allword is false , return 
+
+    Args
     ____
-        documents(single text list):
+        documents(one-D str list):
         language(str):ja,en
-        allword(boolean): whether return each frequency of documents or the word frequency of all documents
+        allword(boolean): whether it return each frequency of each document
+    ____
+    
+    Returns
+    ____
+        frequency :
+        nostopword_documents :
     ____
     """
-    
-    stop_words = set('は を に へ です する から たり ながら れる られ など ます いる こと ため なぜ べき よう まで たち'.split())|set([w for w in [
-        "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
-    ]])if(language=='ja') else set('at in on and or this that'.split())
     
     tagger=MeCab.Tagger("-Owakati")
+    
+    #this contain word list of each document without stop words.
     nostopword_documents=[]
     for document in documents:
         nostopword_sentences=[]
         sentences=document2sentences(document,language)
         for sentence in sentences:
             nostop_words=[]
-            for word in tagger.parse(sentence).split(" ") if(language=='ja') else sentence.split(" "):
-            #whether word isn't single Kanji
+            # extracting words depend on language
+            
+            #____AB TEST_____
+            
+            """for word in tagger.parse(sentence).split(" ") if(language=='ja') else sentence.split(" "):
+                #whether word isn't a single Kanji
                 if(((len(word)>1)|(re.search('[\u4E00-\u9FD0]',word)!=None))&(not word in stop_words)):
                     nostop_words.append(word)
+            nostopword_sentences.append(nostop_words)"""
+            #____END A
+            if(language=="ja"):
+                stop_words=JAPANESE_STOP_WORDS
+            for word in tagger.parse(sentence).split(" ") if(language=='ja') else sentence.split(" "):
+                #whether word isn't a single Kanji
+                if((len(word)>0)&(not word in stop_words)):
+                    nostop_words.append(word)
             nostopword_sentences.append(nostop_words)
+            #____END B
+            
+            #___END TEST___
         nostopword_documents.append(nostopword_sentences)
         
     frequency=[defaultdict(int) for w in range(len(documents))]
@@ -44,11 +66,11 @@ def get_wordfrequency(documents,allword=True,language='ja'):
                 each_frequency[word]+=1
     #frequency=sorted(frequency.items(),key=lambda x:-x[1])
     if(allword):
-        frequency=convert_wordfrequency(frequency)
+        frequency=convert2AllWordsFrequency(frequency)
         frequency=sorted(frequency.items(),key=lambda x:-x[1])
     return frequency,nostopword_documents
 
-def get_frequency(ochasened_documents,allword=True,language='ja'):
+def getFrequency(ochasened_documents,allword=True,language='ja'):
     """
     """
     frequency=[defaultdict(int) for w in range(len(ochasened_documents))]
@@ -64,11 +86,18 @@ def get_frequency(ochasened_documents,allword=True,language='ja'):
 def document2sentences(document,language):
     """
         split document to each sentences
+        
+        Return
+        ______
+            sentences(2-D string list)
+        ______
+        
     """
     if(language in JAPANESE):
         sentences=re.split(r'。|\n',document)
-        
-        """#括弧内の。では区切らないようにする必要がある.!!!後で!!!
+
+        #ToDo 括弧内の。では区切らないようにする必要がある.
+        """
         #if(document.find("「")!=-1):
         kakko=0
         for w in range(len(sentences)):
@@ -89,29 +118,34 @@ def document2sentences(document,language):
         sentences=re.split(".",document)
     return sentences
 
-def convert_wordfrequency(each_frequency):
+def convert2AllWordsFrequency(frequencies):
     """
-        this convert each documents frequency into all word frequency
+        this convert each document's frequency into all word frequency
         
         Args
         _____
-            each_frequency (double dict list)
+            each_frequency (2-D dict list)
         _____
         
     """
-    allword_frequency={}
-    for frequency in each_frequency:
-        for key in frequency.keys():
-            if(key in allword_frequency.keys()):
-                allword_frequency[key]+=frequency[key]
-            else:
-                allword_frequency[key]=frequency[key]
-    return allword_frequency
+    #{word1:count(int),word2:count(int)...}
+    frequency={}
+    for each_frequency in frequencies:
+        for each_key in each_frequency.keys():
+            isEmpty=(frequency.get(each_key)==None)
+            if(isEmpty):
+                frequency[each_key]=each_frequency[each_key]
+                continue
+            frequency[each_key]+=each_frequency[each_key]
+    return frequency
 
-import re
-def get_ochasen(documents,language="jp"):
+def getOchasen(documents,language="jp"):
     """
         return each sentence's ochasen(word property)
+        
+        UsedMethods
+            sentence_ochasen
+            document2sentences
     """
     ochasen_lists=[]
     for document in documents:

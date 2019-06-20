@@ -1,4 +1,7 @@
 import gensim
 
-def get_model():
-    return gensim.models.KeyedVectors.load_word2vec_format("model.vec")
+def getModel(dictionary_pass):
+    """
+        get word's vector from the dictionary
+    """
+    return gensim.models.KeyedVectors.load_word2vec_format(dictionary_pass)
