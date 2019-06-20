@@ -1,20 +1,10 @@
 from setuptools import setup,find_packages
-"""
-setup(
-    name="scraping_tools",
-<<<<<<< HEAD
-    version="1.2.1",
-=======
-    version="1.0.3",
->>>>>>> origin/master
-    install_requires=["requests"],
-    packages=find_packages()
-)"""
 
 setup(
     name="psWord",
-    version="1.0.0",
+    version="1.0.2",
     install_requires=["gensim","matplotlib","networkx","mecab-python3","googletrans"],
+    package_dir=['home':'','parse':"parse","network":"network","gensim":"GensimWrapper"],
     packages=find_packages()
 )
 

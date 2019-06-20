@@ -20,6 +20,7 @@ if(__name__=="__main__"):
         newversion=".".join(version_splited)
         #setuppy[i]=re.sub(pattern,
         setuppy[i]=setuppy[i][:search.start(1)]+newversion+setuppy[i][search.end(1):]
+        print(setuppy)
         break
     new_setuppy="\n".join(setuppy)
     with open("setup.py","w") as f:
