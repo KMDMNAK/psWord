@@ -14,7 +14,7 @@ setup(
 setup(
     name="psWord",
     version="1.0.0",
-    install_requires=["gensim","matplotlib","networkx","MeCab","googletrans"],
+    install_requires=["gensim","matplotlib","networkx","mecab-python3","googletrans"],
     packages=find_packages()
 )
 
