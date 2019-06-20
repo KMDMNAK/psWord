@@ -3,7 +3,7 @@ from setuptools import setup,find_packages
 setup(
     name="scraping_tools",
 <<<<<<< HEAD
-    version="1.2.0",
+    version="1.2.1",
 =======
     version="1.0.3",
 >>>>>>> origin/master
