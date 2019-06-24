@@ -2,7 +2,7 @@
     this function aim to Only Japanese Documents!!
 """
 import MeCab
-from parse import language
+from . import language
 import re
 
 def getOchasen(documents):
