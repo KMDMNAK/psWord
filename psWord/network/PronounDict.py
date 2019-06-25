@@ -20,8 +20,14 @@ class PronounDict:
         self.word_list=[]
     
     def documents2connect(self,documents):
-        import mecab_wrap_copy as mw
-        freq,words=mw.get_wordfrequency(documents)
+        """
+            加工前のdocumentsを挿入、getNoJoshiを施してから、
+            documents_connectを実行
+        """
+        from ..parse import ochasen as ochaen
+        #freq,words=mw.get_wordfrequency(documents)
+        ochasens=ochasen.getOchasen(documents)
+        words=ochasen.getNonJoshi(ochasens)
         self.documents_connect(words)
         
     def documents_connect(self,documents,document_numbers=None):
@@ -102,8 +108,8 @@ class PronounDict:
         nx.draw_networkx_edges(G,pos,alpha=0.1,edge_color='r')
         nx.draw_networkx_nodes(G,pos,node_size=3)
         labels={}
-        for w in range(len(nodes)):
-            labels[w]=nodes[w]
+        for i in range(len(nodes)):
+            labels[i]=nodes[i]
         nx.draw_networkx_labels(G,pos,labels=labels,font_size=10, font_family="IPAexGothic", font_weight="bold")
         plt.axis("off")
         plt.show()
