@@ -1,4 +1,4 @@
-from parse import language
+from . import language
 import MeCab
 from collections import defaultdict
 
