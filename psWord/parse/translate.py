@@ -1,8 +1,9 @@
 import googletrans
 
-def get_transtext(text,dest='ja'):
+def getTranslation(text_list,dest='ja'):
     """
         dest which is the language to read in ["ja","en"]
     """
     translator=googletrans.Translator()
-    return translator.translate(text,dest=dest).text
+    return [each_translator.text for each_translator in translator.translate(text_list,dest=dest)]
+
