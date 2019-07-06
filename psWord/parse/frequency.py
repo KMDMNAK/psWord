@@ -2,7 +2,7 @@ from . import language
 import MeCab
 from collections import defaultdict
 
-def getWordOwakati(documents,language_sign='ja'):
+def getWordOwakati(documents,dictionary_location=None,language_sign='ja'):
     """
     return how many times each word appear in documents.
     if allword is false , return 
@@ -21,7 +21,10 @@ def getWordOwakati(documents,language_sign='ja'):
     ____
     
     """
-    handler=language.getHandler(language_sign,tagger=MeCab.Tagger("-Owakati"))
+    dictionary_String=""
+    if(dictionary_location!=None):
+        dictionary_String="-d {0}".format(dictionary_location)
+    handler=language.getHandler(language_sign,tagger=MeCab.Tagger("{0} -Owakati".format(dictionary_String)))
     #this contain word list of each document without stop words.
     nonstop_words_documents=[]
     for document in documents:

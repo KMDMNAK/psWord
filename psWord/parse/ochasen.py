@@ -5,7 +5,7 @@ import MeCab
 from . import language
 import re
 
-def getOchasen(documents):
+def getOchasen(documents,dictionary_location=None):
     """
         return each sentence's ochasen(word property)
         
@@ -14,7 +14,10 @@ def getOchasen(documents):
             document2sentences
     """
     language_sign="ja"
-    handler=language.getHandler(language_sign,tagger=MeCab.Tagger("-Ochasen"))
+    dictionary_String=""
+    if(dictionary_location!=None):
+        dictionary_String="-d {0}".format(dictionary_location)
+    handler=language.getHandler(language_sign,tagger=MeCab.Tagger("{0} -Ochasen".format(dictionary_String)))
     
     all_ochasen_list=[]
     c=1
@@ -33,7 +36,6 @@ def getOchasen(documents):
         all_ochasen_list.append(document_ochasen_list)
     return all_ochasen_list
 
-tagger= MeCab.Tagger ("-Ochasen")
 def getSentenceOchasen(ochasened_documents):
     """
         return splited MeCab owakati list
