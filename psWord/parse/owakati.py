@@ -75,11 +75,14 @@ def convert2AllWordsFrequency(frequencies):
 
 def searchDocuments(nonstop_words_documents,searching_words):
     document_index=0
-    document_index_lists=[[] for w in range(len(searching_words))]
+    searching_length=len(searching_words)
+    document_index_lists=[[] for w in range(searching_length)]
     for document in nonstop_words_documents:
-        for index in range(len(searching_words)):
+        for index in range(searching_length):
             if(searching_words[index] in document):
-                document_index_lists[index].append(document_index)
+                indexes_list=document_index_lists[index]
+                indexes_list.append(document_index)
+                document_index_lists[index]=indexes_list
         document_index+=1
     return document_index_lists
 
