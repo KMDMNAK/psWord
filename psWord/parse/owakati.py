@@ -78,11 +78,12 @@ def searchDocuments(nonstop_words_documents,searching_words):
     searching_length=len(searching_words)
     document_index_lists=[[] for w in range(searching_length)]
     for document in nonstop_words_documents:
-        for index in range(searching_length):
-            if(searching_words[index] in document):
-                indexes_list=document_index_lists[index]
-                indexes_list.append(document_index)
-                document_index_lists[index]=indexes_list
+        for sentence in document:
+            for index in range(searching_length):
+                if(searching_words[index] in sentence):
+                    indexes_list=document_index_lists[index]
+                    indexes_list.append(document_index)
+                    document_index_lists[index]=indexes_list
         document_index+=1
     return document_index_lists
 
