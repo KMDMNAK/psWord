@@ -4,7 +4,7 @@ NECESSARRY_STOP_WORDS=set("\n")
 JAPANESE=["ja","jp","JP","jpn","JPN","japan","japanese","Japan","Japanese","JAPANESE","JAPAN"]
 ENGLISH=["en","EN","english","eng","ENG","ENGLISH"]
 
-JAPANESE_STOP_SPLITWORDS='は を に へ です する から たり ながら れる られ など ます いる こと ため なぜ べき よう まで たち あ い う え お か き く け こ さ し す せ そ た ち つ て と な に ぬ ね の は ひ ふ へ ほ ま み む め も や ゆ よ ら り る れ ろ わ を ん が で 。 、 「 」 ？ ? < > ＜ ＞ \u3000 ・ ! ！ . : ： ; ； = ＝ ^ ＾ '
+JAPANESE_STOP_SPLITWORDS=r'は を に へ です する から たり ながら れる られ など ます いる こと ため なぜ べき よう まで たち あ い う え お か き く け こ さ し す せ そ た ち つ て と な に ぬ ね の は ひ ふ へ ほ ま み む め も や ゆ よ ら り る れ ろ わ を ん が で 。 、 「 」 ？ ? < > ＜ ＞ \u3000 ・ ! ！ . : ： ; ； = ＝ ^ ＾ '
 ENGLISH_STOP_SPLITWORDS='at in on and or this that'
 
 def makeStopWords(splitword):
