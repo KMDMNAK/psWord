@@ -1,6 +1,6 @@
 import re
 
-NECESSARRY_STOP_WORDS=set("\n")
+NECESSARRY_STOP_WORDS=set(["\n",'\u3000'])
 JAPANESE=["ja","jp","JP","jpn","JPN","japan","japanese","Japan","Japanese","JAPANESE","JAPAN"]
 ENGLISH=["en","EN","english","eng","ENG","ENGLISH"]
 
