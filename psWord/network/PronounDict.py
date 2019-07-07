@@ -24,7 +24,7 @@ class PronounDict:
             加工前のdocumentsを挿入、getNoJoshiを施してから、
             documents_connectを実行
         """
-        from ..parse import ochasen as ochaen
+        from ..parse import ochasen
         #freq,words=mw.get_wordfrequency(documents)
         ochasens=ochasen.getOchasen(documents)
         words=ochasen.getNonJoshi(ochasens)
